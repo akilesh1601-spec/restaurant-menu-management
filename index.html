@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MenuPro restaurant menu management demo" />
+  <title>MenuPro | Restaurant Menu Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-icon">📋</span><span>Menu<span class="brand-accent">Pro</span></span></div>
+    <div class="restaurant-label">RESTAURANT ADMIN</div>
+    <nav class="nav-links" aria-label="Main navigation">
+      <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-link" data-page="categories"><span>▤</span> Categories</button>
+      <button class="nav-link" data-page="items"><span>🍽</span> Menu Items</button>
+      <button class="nav-link" data-page="digital-menu"><span>▣</span> Digital Menu</button>
+      <button class="nav-link" data-page="pricing"><span>₹</span> Pricing</button>
+      <button class="nav-link" data-page="inventory"><span>▥</span> Inventory</button>
+      <button class="nav-link" data-page="analytics"><span>▥</span> Analytics</button>
+      <button class="nav-link" data-page="reports"><span>▧</span> Reports</button>
+      <button class="nav-link" data-page="settings"><span>⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="profile-avatar">A</div>
+      <div><strong>Admin User</strong><small>Menu Manager</small></div>
+      <button class="icon-button" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="mobile-menu icon-button" id="mobileMenu" aria-label="Open navigation">☰</button>
+      <div class="breadcrumb"><span>MenuPro</span><span class="crumb-sep">/</span><strong id="pageHeading">Dashboard</strong></div>
+      <div class="topbar-actions"><span class="status-dot"></span><span class="open-label">System Online</span><button class="avatar-small" title="Admin profile">A</button></div>
+    </header>
+
+    <section class="page active-page" id="page-dashboard">
+      <div class="page-intro"><div><p class="eyebrow">OVERVIEW</p><h1>Good morning, Admin 👋</h1><p class="muted">Here’s what’s happening with your restaurant menu today.</p></div><button class="btn btn-primary" data-go="items">＋ Add Menu Item</button></div>
+      <div class="stat-grid">
+        <article class="stat-card"><div class="stat-top"><span>Total Menu Items</span><span class="stat-icon pink">🍽</span></div><strong id="statItems">24</strong><small class="positive">↑ 4 added this month</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon purple">▤</span></div><strong id="statCategories">8</strong><small class="positive">Menu organized</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Popular Item</span><span class="stat-icon orange">★</span></div><strong class="stat-word">Paneer Tikka</strong><small class="muted">Most viewed this week</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Low Stock Alerts</span><span class="stat-icon red">⚠</span></div><strong id="statLowStock">3</strong><small class="warning">Needs attention</small></article>
+      </div>
+      <div class="content-grid">
+        <article class="panel"><div class="panel-heading"><div><h2>Menu Performance</h2><p class="muted">Sample weekly item views</p></div><span class="badge badge-pink">This week</span></div><div class="chart" aria-label="Sample bar chart"><div class="chart-y"><span>200</span><span>150</span><span>100</span><span>50</span><span>0</span></div><div class="chart-bars"><div class="bar-group"><div class="bar" style="height:42%"></div><small>Mon</small></div><div class="bar-group"><div class="bar" style="height:68%"></div><small>Tue</small></div><div class="bar-group"><div class="bar" style="height:52%"></div><small>Wed</small></div><div class="bar-group"><div class="bar" style="height:85%"></div><small>Thu</small></div><div class="bar-group"><div class="bar" style="height:62%"></div><small>Fri</small></div><div class="bar-group"><div class="bar" style="height:95%"></div><small>Sat</small></div><div class="bar-group"><div class="bar" style="height:77%"></div><small>Sun</small></div></div></div><p class="chart-note">Demo analytics only — not connected to live sales.</p></article>
+        <article class="panel"><div class="panel-heading"><div><h2>Inventory Alerts</h2><p class="muted">Ingredients to review</p></div><button class="text-button" data-go="inventory">View all</button></div><div id="dashboardAlerts" class="alert-list"></div></article>
+      </div>
+      <article class="panel table-panel"><div class="panel-heading"><div><h2>Recently Updated Items</h2><p class="muted">Current sample menu catalogue</p></div><button class="text-button" data-go="items">Manage items →</button></div><div class="table-wrap"><table><thead><tr><th>ITEM</th><th>CATEGORY</th><th>PRICE</th><th>STATUS</th></tr></thead><tbody id="recentItems"></tbody></table></div></article>
+    </section>
+
+    <section class="page" id="page-categories">
+      <div class="page-intro"><div><p class="eyebrow">MENU ORGANIZATION</p><h1>Categories</h1><p class="muted">Create and manage the sections in your restaurant menu.</p></div><button class="btn btn-primary" id="addCategoryBtn">＋ Add Category</button></div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <section class="page" id="page-items">
+      <div class="page-intro"><div><p class="eyebrow">CATALOGUE</p><h1>Menu Items</h1><p class="muted">Manage dish names, prices, dietary labels, and availability.</p></div><button class="btn btn-primary" id="addItemBtn">＋ Add Menu Item</button></div>
+      <div class="toolbar"><input id="itemSearch" type="search" placeholder="Search menu items..." aria-label="Search menu items"><select id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select><select id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option>Available</option><option>Limited Stock</option><option>Out of Stock</option><option>New Item</option></select></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>MENU ITEM</th><th>CATEGORY</th><th>DIETARY TAGS</th><th>PRICE</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="itemsTable"></tbody></table></div></div>
+    </section>
+
+    <section class="page" id="page-digital-menu">
+      <div class="page-intro"><div><p class="eyebrow">CUSTOMER VIEW</p><h1>Digital Menu</h1><p class="muted">A customer-friendly preview of your published menu.</p></div><span class="badge badge-green">Preview mode</span></div>
+      <div class="digital-header"><div class="digital-logo">🍴</div><p class="eyebrow">WELCOME TO</p><h2>The Rose Garden</h2><p>Fresh flavours, made with care.</p><div class="digital-filters" id="digitalFilters"></div></div>
+      <div class="digital-grid" id="digitalGrid"></div>
+    </section>
+
+    <section class="page" id="page-pricing">
+      <div class="page-intro"><div><p class="eyebrow">PRICE CONTROL</p><h1>Pricing Management</h1><p class="muted">Review menu prices and set demo special offers.</p></div></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>ITEM</th><th>REGULAR PRICE</th><th>SPECIAL PRICE</th><th>OFFER</th><th>ACTION</th></tr></thead><tbody id="pricingTable"></tbody></table></div></div>
+    </section>
+
+    <section class="page" id="page-inventory">
+      <div class="page-intro"><div><p class="eyebrow">STOCK CONTROL</p><h1>Inventory Tracking</h1><p class="muted">Track ingredient quantities and low-stock thresholds.</p></div><button class="btn btn-primary" id="addInventoryBtn">＋ Add Ingredient</button></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>INGREDIENT</th><th>QUANTITY</th><th>UNIT</th><th>REORDER LEVEL</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="inventoryTable"></tbody></table></div></div>
+    </section>
+
+    <section class="page" id="page-analytics">
+      <div class="page-intro"><div><p class="eyebrow">INSIGHTS</p><h1>Menu Analytics</h1><p class="muted">Sample views and popularity indicators for demonstration.</p></div></div>
+      <div class="stat-grid"><article class="stat-card"><div class="stat-top"><span>Menu Views</span><span class="stat-icon pink">◉</span></div><strong>2,840</strong><small class="muted">Sample total views</small></article><article class="stat-card"><div class="stat-top"><span>Top Item</span><span class="stat-icon orange">★</span></div><strong class="stat-word">Paneer Tikka</strong><small class="muted">Sample ranking</small></article><article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon purple">▤</span></div><strong id="analyticsCategories">8</strong><small class="muted">Available categories</small></article><article class="stat-card"><div class="stat-top"><span>Catalogue Items</span><span class="stat-icon green">✓</span></div><strong id="analyticsItems">24</strong><small class="muted">Current item count</small></article></div>
+      <div class="panel"><div class="panel-heading"><div><h2>Popular Items</h2><p class="muted">Illustrative analytics data</p></div></div><div id="popularList" class="popular-list"></div></div>
+    </section>
+
+    <section class="page" id="page-reports">
+      <div class="page-intro"><div><p class="eyebrow">EXPORT CENTRE</p><h1>Reports</h1><p class="muted">Export your current menu catalogue and inventory as CSV files.</p></div></div>
+      <div class="report-grid"><article class="report-card"><div class="report-icon">📄</div><h2>Menu Catalogue</h2><p>Export item names, categories, dietary tags, prices, and status.</p><button class="btn btn-primary" id="exportMenuBtn">Download Menu CSV</button></article><article class="report-card"><div class="report-icon">📦</div><h2>Inventory Report</h2><p>Export ingredient quantities and reorder levels.</p><button class="btn btn-outline" id="exportInventoryBtn">Download Inventory CSV</button></article></div>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="page-intro"><div><p class="eyebrow">PREFERENCES</p><h1>Settings</h1><p class="muted">Demo profile and application preferences.</p></div></div>
+      <div class="panel settings-panel"><h2>Administrator Profile</h2><p><strong>Role:</strong> Menu Manager (demo)</p><p><strong>Application:</strong> MenuPro Restaurant Menu Management</p><p><strong>Storage:</strong> Browser localStorage</p><p class="notice">This demo does not provide real user authentication or a server database.</p><button class="btn btn-outline" id="resetDemoBtn">Reset demo data</button></div>
+    </section>
+
+    <footer class="footer">MenuPro · Restaurant Menu Management <span>WD-RES-004 · DAS-RES-004</span></footer>
+  </main>
+
+  <dialog id="itemDialog" class="form-dialog">
+    <form id="itemForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">CATALOGUE</p><h2 id="itemDialogTitle">Add Menu Item</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="itemId">
+      <label>Item name<input id="itemName" required maxlength="70" placeholder="e.g. Vegetable Pasta"></label>
+      <label>Description<textarea id="itemDescription" rows="2" maxlength="180" placeholder="Describe the dish"></textarea></label>
+      <div class="form-row"><label>Category<select id="itemCategory" required></select></label><label>Price (₹)<input id="itemPrice" required type="number" min="0" step="0.01" placeholder="199"></label></div>
+      <label>Dietary tags <input id="itemTags" placeholder="Vegetarian, Spicy"></label>
+      <label>Status<select id="itemStatus"><option>Available</option><option>Limited Stock</option><option>Out of Stock</option><option>New Item</option></select></label>
+      <div class="dialog-actions"><button type="button" class="btn btn-outline close-dialog">Cancel</button><button type="submit" class="btn btn-primary">Save Item</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="categoryDialog" class="form-dialog">
+    <form id="categoryForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">ORGANIZATION</p><h2>Add Category</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <label>Category name<input id="categoryName" required maxlength="40" placeholder="e.g. Breakfast"></label>
+      <label>Description<input id="categoryDescription" maxlength="100" placeholder="Short description"></label>
+      <div class="dialog-actions"><button type="button" class="btn btn-outline close-dialog">Cancel</button><button type="submit" class="btn btn-primary">Save Category</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="inventoryDialog" class="form-dialog">
+    <form id="inventoryForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">STOCK CONTROL</p><h2>Add Ingredient</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <label>Ingredient name<input id="ingredientName" required maxlength="60" placeholder="e.g. Tomatoes"></label>
+      <div class="form-row"><label>Quantity<input id="ingredientQuantity" required type="number" min="0" step="0.1"></label><label>Unit<input id="ingredientUnit" required maxlength="15" placeholder="kg, litres, pcs"></label></div>
+      <label>Reorder level<input id="ingredientReorder" required type="number" min="0" step="0.1"></label>
+      <div class="dialog-actions"><button type="button" class="btn btn-outline close-dialog">Cancel</button><button type="submit" class="btn btn-primary">Save Ingredient</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
